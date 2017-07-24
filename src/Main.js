@@ -2,21 +2,14 @@ import React, { Component } from 'react';
 import './App.css';
 import {DotInArray, AllDotIn} from './tools'
 
-
-
 class Main extends Component {
 
     allShips = []
 
     constructor(props){
-
         super(props)
-
         this.resolveClass = this.resolveClass.bind(this);
         this.calculateResult = this.calculateResult.bind(this);
-
-
-
         this.props.data.ships.layout.map((p)=>{
             p.positions.map((m)=>{
                 this.allShips.push(m);
@@ -27,7 +20,6 @@ class Main extends Component {
     resolveClass (x,y)  {
 
             if (DotInArray([x,y],this.props.data.hits) && DotInArray([x,y],this.allShips)) {
-
                 for (var s = 0 ; s < this.props.data.ships.layout.length; s++){
                     var ship = this.props.data.ships.layout[s].positions;
                     if (AllDotIn(ship, this.props.data.hits)){
@@ -35,7 +27,6 @@ class Main extends Component {
                             return 'killed'
                         }
                     }
-
                 }
 
              return 'hit'
@@ -53,7 +44,6 @@ class Main extends Component {
     }
 
     componentDidUpdate(prevProps, prevState){
-
         this.calculateResult();
     }
 
@@ -63,7 +53,6 @@ class Main extends Component {
               var className = this.resolveClass(x, y);
                  return <td className={className} onClick={this.props.click.bind(null, x, y)} key={x + '_' + y }></td>
           });
-
           return <tr  key={y}>{cells}</tr>
       });
 
@@ -73,7 +62,6 @@ class Main extends Component {
       <div className="App">
           {board}
           <hr />
-
       </div>
     );
   }
