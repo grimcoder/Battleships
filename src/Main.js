@@ -58,11 +58,20 @@ class Main extends Component {
           return <tr  key={y}>{cells}</tr>
       });
 
-      var board = <table ><tbody>{rows}</tbody></table>
+      const board = <table ><tbody>{rows}</tbody></table>
+      const availGames = this.props.availableGames ? this.props.availableGames.initGames : []
+      const joinButtons = availGames.map((game)=> <button onClick={this.props.joinGame.bind(this, game)}>JoinGame</button> )
 
     return (
       <div className="App">
-          <button onClick={this.props.SocketIOHandshake.bind(this, 'hi there')}>Handshake</button>
+
+          {/*<button onClick={this.props.SocketIOHandshake.bind(this, 'hi there')}>Handshake</button>*/}
+
+          <button onClick={this.props.InitGame.bind(this, '')}>Init game</button>
+
+          <button onClick={this.props.CreateGame.bind(this, '')}>Create game</button>
+
+          {joinButtons}
           {board}
           <hr />
       </div>

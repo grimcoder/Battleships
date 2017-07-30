@@ -18,9 +18,5 @@ const defaultState = {
 
 const store = createStore(shipsReducer, defaultState, applyMiddleware(socketIoMiddleware));
 
-store.subscribe(()=>{
-    console.log('new client state', store.getState());
-});
-
 
 export default store;

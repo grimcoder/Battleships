@@ -4,5 +4,5 @@
 
 const makeCopy = obj => JSON.parse(JSON.stringify(obj))
 
-module.exports.makeCopy = makeCopy;
+module.exports = makeCopy;
 

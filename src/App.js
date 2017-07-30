@@ -10,7 +10,8 @@ import Main from './Main';
 
 function mapStateToProps(state) {
     return {
-        data: state.data
+        data: state.data,
+        availableGames: state.availableGames
     }
 }
 

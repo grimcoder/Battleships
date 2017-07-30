@@ -18,8 +18,14 @@ function ships(state = [], action) {
             return {data : {ships: state.data.ships, hits}};
 
 
-        case 'message':
-            console.log (Object.assign({}, {message:action.data}));
+        case 'initResponse':
+            console.log (action);
+            state = clone(state);
+            state['availableGames'] = action.data;
+            return state;
+
+        case 'createResponse':
+            console.log (action);
             return state;
 
         default:

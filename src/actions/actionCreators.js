@@ -17,3 +17,26 @@ export function SocketIOHandshake(message) {
         message
     }
 }
+
+export function InitGame() {
+    return {
+        type: 'server/init',
+
+    }
+}
+
+export function CreateGame() {
+    return {
+        type: 'server/create',
+    }
+}
+
+
+export function joinGame(game) {
+    return {
+        type: 'server/join',
+        data: game
+
+    }
+}
+
