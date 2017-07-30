@@ -43,6 +43,8 @@ class Main extends Component {
         if (AllDotIn(this.allShips, this.props.data.hits)) alert('you won')
     }
 
+
+
     componentDidUpdate(prevProps, prevState){
         this.calculateResult();
     }
@@ -60,6 +62,7 @@ class Main extends Component {
 
     return (
       <div className="App">
+          <button onClick={this.props.SocketIOHandshake.bind(this, 'hi there')}>Handshake</button>
           {board}
           <hr />
       </div>

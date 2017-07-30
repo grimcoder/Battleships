@@ -9,3 +9,11 @@ export function click(x,y) {
         y
     }
 }
+
+
+export function SocketIOHandshake(message) {
+    return {
+        type: 'server/hello',
+        message
+    }
+}

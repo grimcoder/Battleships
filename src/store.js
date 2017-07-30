@@ -13,16 +13,14 @@ let socketIoMiddleware = createSocketIoMiddleware(socket, "server/");
 
 // create an object for the default data
 const defaultState = {
-data
+    data
 };
 
 const store = createStore(shipsReducer, defaultState, applyMiddleware(socketIoMiddleware));
 
-
 store.subscribe(()=>{
     console.log('new client state', store.getState());
 });
-store.dispatch({type:'server/hello', data:'Hello!'});
 
 
 export default store;
