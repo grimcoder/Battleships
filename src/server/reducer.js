@@ -1,19 +1,14 @@
-/**
- * Created by taraskovtun on 7/29/17.
- */
-
-const makeCopy = require( './tools')
+const makeCopy = require( './tools').makeCopy
+const DotInArray = require( './tools').DotInArray
+const AllDotIn = require( './tools').AllDotIn
 
 module.exports.reducer =  (state = {}, action) => {
 
-    switch (action.type){
+    const statecopy = makeCopy(state);
+    const socketId = action.socketId;
 
-        // if(action.type === 'server/hello'){
-        //     console.log('Got hello data!', action.data);
-        //     socket.emit('action', {type:'message', data:'good day buddy!'});
-        // }
-        // if (action.type === 'server/init'){
-        // }
+    let gameId;
+    switch (action.type){
 
         case 'server/init' :
 
@@ -21,30 +16,57 @@ module.exports.reducer =  (state = {}, action) => {
 
         case 'server/create':
 
-            const statecopy = makeCopy(state);
-            const socketId = action.socketId;
             const newgameId = action.newgameId;
 
             statecopy.games[newgameId] = {
-
                 status: 'init', // init, created, started, finished
-
-                turn: action.socketId,
-
+                turn: socketId,
                 players: {
-                    socketId: {socketId}
-                }
 
+                }
             }
+
+            statecopy.games[newgameId].players[socketId] = {}
+
+            statecopy.games[newgameId].createdBy = socketId;
 
             return statecopy;
 
             break;
 
         case 'server/join':
+
+
+             gameId = action.data;
+
+            if (statecopy.games[gameId].createdBy == socketId) return statecopy;
+
+            statecopy.games[gameId].players[socketId] = {}
+            statecopy.games[gameId].status = 'created'
+            return statecopy;
             break;
 
-        case 'server/hit':
+        case 'server/start':
+            gameId = action.data.game;
+            statecopy.games[gameId].players[socketId].started = true;
+            statecopy.games[gameId].players[socketId].board = action.data.board;
+
+            return statecopy;
+
+        case 'server/CELL_CLICKED':
+
+            gameId = action.gameId;
+            const enemyId = Object.keys(statecopy.games[gameId].players).filter((player)=>player!=socketId)[0];
+
+            const enemyBoard = statecopy.games[gameId].players[enemyId].board;
+
+
+
+            //enemyBoard.enemyHits
+            //enemyBoard.Hits
+            //enemyBoard.ships.layout
+
+
             break;
 
         default:
