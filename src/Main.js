@@ -10,11 +10,14 @@ class Main extends Component {
         super(props)
         this.resolveClass = this.resolveClass.bind(this);
         this.calculateResult = this.calculateResult.bind(this);
+
+
         this.props.data.ships.layout.map((p)=>{
             p.positions.map((m)=>{
                 this.allShips.push(m);
             })
         })
+
     }
 
     resolveClass (x,y)  {

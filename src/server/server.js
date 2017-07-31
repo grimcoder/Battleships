@@ -76,6 +76,9 @@ io.on('connection', function(socket){
 
             case 'server/CELL_CLICKED':
                 state = reducer(state, action);
+
+                io.sockets.in(action.gameId).emit('action', {type:'yourTurn', data: state.games[action.gameId].turn});
+
                 break;
 
             default:

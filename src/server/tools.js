@@ -24,6 +24,6 @@ const AllDotIn = (arr, arr2) => {
 
 
 module.exports.makeCopy = makeCopy;
-module.exports.DotInArray = makeCopy;
-module.exports.AllDotIn = makeCopy;
+module.exports.DotInArray = DotInArray;
+module.exports.AllDotIn = AllDotIn;
 
