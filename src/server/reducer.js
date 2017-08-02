@@ -78,13 +78,17 @@ module.exports.reducer =  (state = {}, action) => {
                 enemyBoard.enemyHits.push([x,y]);
             }
 
-            const status = resolveClass(x,y,enemyBoard);
+            board.hits = []
+            
+            enemyBoard.enemyHits.forEach(function(element) {   
+                let status = resolveClass(element[0],element[1],enemyBoard);
+                board.hits.push({
+                    x: element[0],
+                    y: element[1],
+                    status
+                })
+            }, this);
 
-            board.hits.push({
-                x: x,
-                y: y,
-                status
-            })
 
             statecopy.games[gameId].turn = enemyId;
             console.log(JSON.stringify(statecopy))
@@ -99,12 +103,14 @@ module.exports.reducer =  (state = {}, action) => {
 
 }
 
+        didIWin = (board) =>{
+        }
+
         resolveClass = (x,y, board) => {
 
             const hits = board.enemyHits;
             const allShips = board.allShips;
             const ships = board.ships;
-
             if (DotInArray([x,y],hits) && DotInArray([x,y],allShips)) {
 
         for (var s = 0 ; s < ships.layout.length; s++){

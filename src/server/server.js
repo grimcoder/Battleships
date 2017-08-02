@@ -76,6 +76,11 @@ io.on('connection', function(socket){
 
             case 'server/CELL_CLICKED':
                 state = reducer(state, action);
+                gameId = action.gameId;
+
+                const hits = state.games[gameId].players[socketId].board.hits;
+
+                socket.emit('action', {type:'hitResponse', hits});
 
                 io.sockets.in(action.gameId).emit('action', {type:'yourTurn', data: state.games[action.gameId].turn});
 
@@ -85,18 +90,6 @@ io.on('connection', function(socket){
                 break;
 
         }
-
-        // if(action.type === 'server/hello'){
-        //
-        //     console.log('Got hello data!', action.data);
-        //
-        //     socket.emit('action', {type:'message', data:'good day buddy!'});
-        //
-        // }
-        //
-        // if (action.type === 'server/init'){
-        //
-        // }
 
     });
 

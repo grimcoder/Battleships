@@ -70,9 +70,15 @@ function ships(state = [], action) {
 
         case 'yourTurn':
             console.log (action);
+            state = clone(state);
             state['myTurn'] = state.playerId == action.data ? true : false;
-            state = clone(state)    ;
+            return state;
 
+        case 'hitResponse':
+            console.log (action);
+
+            state = clone(state);
+            state['hits'] = action.hits;
 
             return state;
 

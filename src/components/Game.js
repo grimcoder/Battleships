@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-import {DotInArray, AllDotIn} from './tools'
+import {DotInArray, AllDotIn} from './../tools'
 
-class Main extends Component {
+class Game extends Component {
 
     allShips = []
 
@@ -22,24 +22,13 @@ class Main extends Component {
 
     resolveClass (x,y)  {
 
-            if (DotInArray([x,y],this.props.data.hits) && DotInArray([x,y],this.allShips)) {
-                for (var s = 0 ; s < this.props.data.ships.layout.length; s++){
-                    var ship = this.props.data.ships.layout[s].positions;
-                    if (AllDotIn(ship, this.props.data.hits)){
-                        if (DotInArray([x,y], ship)){
-                            return 'killed'
-                        }
-                    }
-                }
+        if (!this.props.hits || this.props.hits.length ==0) return 'empty'
 
-             return 'hit'
+        let hit = this.props.hits.filter((hit)=>hit.x == x && hit.y == y)[0];
 
-        }
-        else if (DotInArray([x,y],this.props.data.hits))
-            return 'tried'
-        else {
-            return 'empty'
-        }
+        return hit ? hit.status : 'empty'
+
+
     }
 
     calculateResult(){
@@ -91,4 +80,4 @@ class Main extends Component {
   }
 }
 
-export default Main;
+export default Game;

@@ -1,7 +1,8 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as actionCreators from './actions/actionCreators';
+import * as actionCreators from './../actions/actionCreators';
 import Main from './Main';
+import Game from './Game';
 
 
 function mapStateToProps(state) {
@@ -13,6 +14,7 @@ function mapStateToProps(state) {
         startedGame: state.startedGame,
         gameStatue: state.gameStatue,
         myTurn: state.myTurn,
+        hits: state.hits,
         playerId: state.playerId
     }
 }
