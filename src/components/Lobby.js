@@ -24,9 +24,7 @@ class Lobby extends Component {
         <button onClick={
           ()=>
             {
-              {/* this.props.CreateGame.bind(this, '')(); */}
-              this.props.history.push.bind(this, '/creategame')();
-              
+                this.props.history.push.bind(this, '/creategame')();
               }
           }>
             Start new game

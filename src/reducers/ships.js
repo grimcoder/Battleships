@@ -88,6 +88,14 @@ function ships(state = [], action) {
 
             return state;
 
+        case 'win':
+            console.log (action);
+
+            state = clone(state);
+            state['winner'] = action.winner;
+
+            return state;
+
         default:
             return state;
     }

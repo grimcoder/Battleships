@@ -35,13 +35,10 @@ class Game extends Component {
         if (AllDotIn(this.allShips, this.props.data.hits)) alert('you won')
     }
 
-
-
-    componentDidUpdate(prevProps, prevState){
-        this.calculateResult();
-    }
-
   render() {
+
+    if (this.props.winner) alert(`Winner is ${this.props.winner}`)
+
       let rows =  Array.apply(null,  Array(10)).map((i,y)=>{
           let cells =  Array.apply(null,Array(10)).map((l,x)=>{
               var className = this.resolveClass(x, y);

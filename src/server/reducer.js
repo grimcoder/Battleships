@@ -44,7 +44,7 @@ module.exports.reducer =  (state = {}, action) => {
 
             if (statecopy.games[gameId].createdBy == socketId) return statecopy;
 
-            statecopy.games[gameId].players[socketId] = {}
+            statecopy.games[gameId].players[socketId] = {name: 'new Name'}
             statecopy.games[gameId].status = 'created'
             return statecopy;
             break;
