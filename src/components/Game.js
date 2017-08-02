@@ -53,25 +53,11 @@ class Game extends Component {
       const board = <table disabled={!this.props.myTurn} ><tbody>{rows}</tbody></table>
       const availGames = this.props.availableGames ? this.props.availableGames.initGames : []
 
-      const joinButtons = availGames
-          .filter((game)=>game[1].createdBy != this.props.playerId)
-          .map((game)=> <button onClick={this.props.joinGame.bind(this, game[0])}>JoinGame</button> )
 
-      const startButton = this.props.joinedGame
-          ?  <button onClick={this.props.startGame.bind(this, this.props.joinedGame)}>Start game</button>
-          : undefined;
 
     return (
       <div className="App">
 
-          {/*<button onClick={this.props.SocketIOHandshake.bind(this, 'hi there')}>Handshake</button>*/}
-
-          <button onClick={this.props.InitGame.bind(this, '')}>Init game</button>
-
-          <button onClick={this.props.CreateGame.bind(this, '')}>Create game</button>
-          {startButton}
-
-          {joinButtons}
           {this.props.myTurn ? <span>My turn</span> : undefined}
           {board}
           <hr />

@@ -21,6 +21,13 @@ io.on('connection', function(socket){
 
     console.log("Socket connected: " + socket.id);
 
+        socket.on('disconnected', function() {
+
+            socket.emit('DelPlayer', person_name);
+
+        });
+
+
     socket.on('action', (action) => {
 
 
@@ -36,8 +43,13 @@ io.on('connection', function(socket){
 
                 break;
 
+            case 'server/hello'  :
+                socket.emit('action', {type:'helloResponse', userId: socket.id});
+                break;
+
             case 'server/create':
                 action.newgameId = uuid.v4();
+                 
                 state = reducer(state, action);
                 socket.join(action.newgameId,(err) => {
                     let rooms = Object.keys(socket.rooms);
@@ -45,7 +57,9 @@ io.on('connection', function(socket){
                     io.sockets.in(action.newgameId).emit(action.newgameId, 'a new user has joined the room'); // broadcast to everyone in the room
                 });
 
-                socket.emit('action', {type:'createResponse', data:{userId: socketId, newgameId: action.newgameId}});
+                socket.emit('action', {type:'createResponse', data:{userId: socketId,
+                    newgame: state.games[action.newgameId],
+                    newgameId: action.newgameId}});
 
                 break;
 

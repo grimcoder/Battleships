@@ -12,10 +12,9 @@ export function click(x, y, gameId) {
 }
 
 
-export function SocketIOHandshake(message) {
+export function SocketIOHandshake() {
     return {
-        type: 'server/hello',
-        message
+        type: 'server/hello'
     }
 }
 
@@ -25,9 +24,10 @@ export function InitGame() {
     }
 }
 
-export function CreateGame() {
+export function CreateGame(playerName) {
     return {
         type: 'server/create',
+        playerName
     }
 }
 

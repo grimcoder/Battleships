@@ -5,6 +5,12 @@ import {DotInArray, clone} from '../tools'
 
 function ships(state = [], action) {
     switch(action.type) {
+        case 'helloResponse' :
+
+            state = clone(state)
+            state.userId = action.userId;
+            return state;
+
         case 'CELL_CLICKED' :
 
             const x = action.x;

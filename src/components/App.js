@@ -7,6 +7,7 @@ import Game from './Game';
 
 function mapStateToProps(state) {
     return {
+        userId: state.userId,
         data: state.data,
         availableGames: state.availableGames,
         joinedGame: state.joinedGame,

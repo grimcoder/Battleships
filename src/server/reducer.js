@@ -17,16 +17,19 @@ module.exports.reducer =  (state = {}, action) => {
         case 'server/create':
 
             const newgameId = action.newgameId;
+            const playerName = action.playerName;
 
+            const player = {}
+            statecopy.games= {} // TODO: this should be removed if we want more than one game at a time.
+            
             statecopy.games[newgameId] = {
                 status: 'init', // init, created, started, finished
                 turn: socketId,
                 players: {
-
                 }
             }
 
-            statecopy.games[newgameId].players[socketId] = {}
+            statecopy.games[newgameId].players[socketId] = {name: playerName} 
 
             statecopy.games[newgameId].createdBy = socketId;
 
