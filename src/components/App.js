@@ -17,6 +17,7 @@ function mapStateToProps(state) {
         myTurn: state.myTurn,
         hits: state.hits,
         winner: state.winner,
+        playerName: state.playerName,
         playerId: state.playerId
     }
 }

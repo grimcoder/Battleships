@@ -36,6 +36,7 @@ function ships(state = [], action) {
             console.log (action);
             state = clone(state);
             state.playerId = action.data.userId;
+            state.playerName = action.data.playerName;
             state['gameStatue'] = 'created';
             return state;
 
@@ -48,6 +49,7 @@ function ships(state = [], action) {
             state['gameStatue'] = 'joined';
             state.availableGames = undefined;
             state.joinedGame = action.data.gameId;
+            if (!state.playerName) state.playerName = action.data.playerName;
 
             return state;
 
@@ -94,6 +96,10 @@ function ships(state = [], action) {
             state = clone(state);
             state['winner'] = action.winner;
 
+            return state;
+
+            case 'resetState':
+            state = {}
             return state;
 
         default:

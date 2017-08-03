@@ -18,15 +18,13 @@ CreateGame(){
     if (this.props.joinedGame){
         this.props.history.push.bind(this, '/startgame')();
     }
-      
+
       const availGames = this.props.availableGames ? this.props.availableGames.initGames : []
-
-
 
     return (
       <div>
 
-        <input type='text' value={this.playerName} 
+        <input type='text'  
         ref={(playerName)=>{this.playerName=playerName}} /> 
 
         <button onClick={this.CreateGame}>

@@ -56,7 +56,8 @@ io.on('connection', function(socket){
                 });
 
                 socket.emit('action', {type:'createResponse', data:{userId: socketId,
-                    newgame: state.games[action.newgameId],
+                    newgame: state.games[action.newgameId], 
+                    playerName: state.games[action.newgameId].players[socketId].name,
                     newgameId: action.newgameId}});
 
                 break;
@@ -70,7 +71,8 @@ io.on('connection', function(socket){
                     io.sockets.in(action.data).emit(action.data, 'a new user has joined the room'); // broadcast to everyone in the room
                 });
 
-                io.sockets.in(action.data).emit('action', {type:'joinResponse', data:{userId: socketId, gameId: action.data}});
+                io.sockets.in(action.data).emit('action', {type:'joinResponse', 
+                data:{userId: socketId, gameId: action.data, playerName: state.games[action.data].players[socketId].name}});
 
                 break;
 
@@ -80,10 +82,10 @@ io.on('connection', function(socket){
 
                 if (Object.entries(state.games[action.data.game].players).filter((player)=>{return player[1].started}).length == 2) {
                     io.sockets.in(action.data.game).emit('action', {type:'startedResponse', data:{gameId: action.data}});
+
                 }
+                    io.sockets.in(action.data.game).emit('action', {type:'yourTurn', data: state.games[action.data.game].turn});
 
-
-                socket.emit('action', {type:'yourTurn', data: state.games[action.data.game].turn});
                 break;
 
             case 'server/CELL_CLICKED':
@@ -92,6 +94,8 @@ io.on('connection', function(socket){
 
                 const hits = state.games[gameId].players[socketId].board.hits;
                 socket.emit('action', {type:'hitResponse', hits});
+
+                io.sockets.in(action.gameId).emit('action', {type:'yourTurn', data: state.games[action.gameId].turn});
 
                 if (CalculateWin(gameId, socketId)){
                     io.sockets.in(action.gameId).emit('action', 
@@ -102,7 +106,6 @@ io.on('connection', function(socket){
                     return;
                 }
 
-                io.sockets.in(action.gameId).emit('action', {type:'yourTurn', data: state.games[action.gameId].turn});
 
                 break;
 

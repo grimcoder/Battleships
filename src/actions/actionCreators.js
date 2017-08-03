@@ -11,6 +11,11 @@ export function click(x, y, gameId) {
     }
 }
 
+export function resetState(){
+    return {
+        type: 'resetState'
+    }
+}
 
 export function SocketIOHandshake() {
     return {
@@ -31,10 +36,11 @@ export function CreateGame(playerName) {
     }
 }
 
-export function joinGame(game) {
+export function joinGame(game, name) {
     return {
         type: 'server/join',
-        data: game
+        data: game,
+        name: name
     }
 }
 
