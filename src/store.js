@@ -7,11 +7,11 @@ import createSocketIoMiddleware from 'redux-socket.io';
 import io from 'socket.io-client';
 import shipsReducer from './reducers/ships';
 import data from './data/data.js';
-import { syncHistoryWithStore} from 'react-router-redux';
+import { syncHistoryWithStore } from 'react-router-redux';
 import { browserHistory } from 'react-router';
 import rootReducer from './reducers/index';
 
-let socket = io('http://localhost:3000');
+let socket = io('http://0.0.0.0:3000');
 
 let socketIoMiddleware = createSocketIoMiddleware(socket, "server/");
 

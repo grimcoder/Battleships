@@ -17,14 +17,11 @@ class Game extends Component {
         return hit ? hit.status : 'empty'
     }
 
-
   render() {
-
     if (this.props.winner) {
         //alert(`Winner is ${this.props.winner}`)
         const result =  this.props.playerName == this.props.winner ? "You are winner" : "You lost";
         return (<div>{result}</div>)
-
     }
 
       let rows =  Array.apply(null,  Array(10)).map((i,y)=>{
@@ -38,8 +35,6 @@ class Game extends Component {
 
       const board = <table disabled={!this.props.myTurn} ><tbody>{rows}</tbody></table>
       const availGames = this.props.availableGames ? this.props.availableGames.initGames : []
-
-
 
     return (
       <div className="App">
