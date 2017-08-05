@@ -22,6 +22,7 @@ function mapStateToProps(state) {
         enemyId: state.enemyId,
         enemyHits: state.enemyHits,
         ships: state.ships,
+        allShips: state.allShips,
         playerId: state.playerId
     }
 }

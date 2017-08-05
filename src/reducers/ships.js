@@ -98,6 +98,9 @@ function ships(state = [], action) {
         case 'server/start':
             state = clone(state);
             state['ships'] = action.data.board.ships;
+
+            state['allShips'] = action.data.board.ships.layout.reduce((arr, ship)=>  [...arr, ...ship.positions], [] );
+            
             return state;
         break;
 

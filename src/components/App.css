@@ -34,3 +34,6 @@ td {
 .empty {background-color: white}
 .tried {background-color: aliceblue}
 .killed {background-color: red}
+.ship {background-color: blue}
+
+.bold{font-weight: bold}

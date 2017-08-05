@@ -7,7 +7,10 @@ constructor(props){
 
   this.state = {
 
-      ships: [{"ship": "destroyer", "positions": [[0, 0], [1, 0]]}]
+      ships: [
+        {"ship": "destroyer", "positions": [[0, 0], [1, 0]]},
+        {"ship": "destroyer", "positions": [[2, 2], [3, 2]]},
+      ]
     
     }
   }
