@@ -18,6 +18,10 @@ function mapStateToProps(state) {
         hits: state.hits,
         winner: state.winner,
         playerName: state.playerName,
+        enemyName: state.enemyName,
+        enemyId: state.enemyId,
+        enemyHits: state.enemyHits,
+        ships: state.ships,
         playerId: state.playerId
     }
 }

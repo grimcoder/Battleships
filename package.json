@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "express": "^4.15.3",
     "react": "^15.6.1",
     "react-addons-css-transition-group": "^15.0.2",
     "react-dom": "^15.6.1",
@@ -16,13 +17,17 @@
     "redux": "^3.5.2",
     "redux-socket.io": "^1.4.0",
     "rimraf": "^2.5.2",
+    "simple-node-logger": "^0.93.28",
     "socket.io": "^2.0.3",
     "socket.io-client": "^2.0.3",
     "uuid": "^3.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "REACT_APP_API_HOST=http://localhost:3000 react-scripts  start",
+    "build": "REACT_APP_API_HOST=http://api.taraskovtun.com:80 react-scripts build",
+    "deploy": "scp -r build/* root@DigiGh:/var/www/demo/",
+    "deployService": "scp -r src/server/* root@DigiGh:/var/www/node/battleships/server/",
+    "restartService": "ssh root@DigiGh 'systemctl restart battleships'",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }

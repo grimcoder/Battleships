@@ -11,8 +11,8 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import { browserHistory } from 'react-router';
 import rootReducer from './reducers/index';
 
-let socket = io('http://0.0.0.0:3000');
 
+let socket = io(process.env.REACT_APP_API_HOST)
 let socketIoMiddleware = createSocketIoMiddleware(socket, "server/");
 
 // create an object for the default data

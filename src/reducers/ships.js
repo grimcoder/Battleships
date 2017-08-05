@@ -27,9 +27,11 @@ function ships(state = [], action) {
         case 'initResponse':
             console.log (action);
             state = clone(state);
+
             state['availableGames'] = action.data;
 
             //state['gameStatue'] = 'init';
+
             return state;
 
         case 'createResponse':
@@ -49,7 +51,18 @@ function ships(state = [], action) {
             state['gameStatue'] = 'joined';
             state.availableGames = undefined;
             state.joinedGame = action.data.gameId;
-            if (!state.playerName) state.playerName = action.data.playerName;
+            state.createdById = action.data.createdById;
+
+            if (!state.playerName) {
+                state.playerName = action.data.playerName;
+                state.enemyName = action.data.createdBy;
+                state.enemyId = action.data.createdById;
+            }
+            else{
+                state.enemyName = action.data.playerName;
+                state.enemyId = action.data.userId;
+                
+            }
 
             return state;
 
@@ -82,11 +95,24 @@ function ships(state = [], action) {
             state['myTurn'] = state.playerId == action.data ? true : false;
             return state;
 
+        case 'server/start':
+            state = clone(state);
+            state['ships'] = action.data.board.ships;
+            return state;
+        break;
+
+
         case 'hitResponse':
             console.log (action);
 
             state = clone(state);
-            state['hits'] = action.hits;
+
+            if (state.playerId == action.socketId){
+                [state['hits'] , state['enemyHits']]= [ action.hits, action.enemyHits];
+            }
+            else{
+                [state['hits'], state['enemyHits']] = [action.enemyHits,action.hits]
+            }
 
             return state;
 

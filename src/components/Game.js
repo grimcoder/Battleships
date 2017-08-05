@@ -9,6 +9,17 @@ class Game extends Component {
     constructor(props){
         super(props)
         this.resolveClass = this.resolveClass.bind(this);
+        this.showMyBoard = this.showMyBoard.bind(this);
+        this.showEnemyBoard = this.showEnemyBoard.bind(this);
+        this.state = {showEnemy: true}
+    }
+
+    showEnemyBoard(){
+        this.setState({showEnemy: true})
+    }
+
+    showMyBoard(){
+        this.setState({showEnemy: false})
     }
 
     resolveClass (x,y)  {
@@ -33,12 +44,14 @@ class Game extends Component {
           return <tr  key={y}>{cells}</tr>
       });
 
-      const board = <table disabled={!this.props.myTurn} ><tbody>{rows}</tbody></table>
+      const board = this.state.showEnemy ?  <table disabled={!this.props.myTurn} ><tbody>{rows}</tbody></table> : undefined
+      
       const availGames = this.props.availableGames ? this.props.availableGames.initGames : []
 
     return (
       <div className="App">
-
+            <button onClick={this.showMyBoard}>My Board</button>
+            <button onClick={this.showEnemyBoard}>Enemy {this.props.enemyName}</button>
           {this.props.myTurn ? <span>My turn</span> : undefined}
           {board}
           <hr />
