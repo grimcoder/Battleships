@@ -71,6 +71,7 @@ class Game extends Component {
 
 
   render() {
+      let result
     var sounds = 
     <div>
         <audio src={hit} ref={(hit)=>{this.hit = hit;}}/>
@@ -81,41 +82,22 @@ class Game extends Component {
     </div>
 
 if (this.props.winner) {
-        //alert(`Winner is ${this.props.winner}`)
-        const result =  this.props.playerName == this.props.winner ? "You are winner" : "You lost";
-        return (<div>{sounds}{result}</div>)
+
+         result =  this.props.playerName == this.props.winner ? "You are winner" : "You lost";
     }
 
-    //   let enemyrows =  Array.apply(null,  Array(10)).map((i,y)=>{
-    //       let cells =  Array.apply(null,Array(10)).map((l,x)=>{
-    //           var className = this.resolveClassEnemy(x, y);
-    //              return <td className={className} key={x + '_' + y }></td>
-    //       });
-    //       return <tr  key={y}>{cells}</tr>
-    //   });
-
-      let rows =  Array.apply(null,  Array(10)).map((i,y)=>{
-          let cells =  Array.apply(null,Array(10)).map((l,x)=>{
-              var className = this.resolveClass(x, y);
-                 return <td className={className} onClick={this.props.myTurn && this.props.startedGame ? 
-                 this.props.click.bind(null, x, y, this.props.startedGame.game) : null} key={x + '_' + y }></td>
-          });
-          return <tr  key={y}>{cells}</tr>
-      });
-
-      const boardEnemy =  <table disabled={!this.props.myTurn} ><tbody>{rows}</tbody></table>
-    //   const boardMy = <table disabled={true} ><tbody>{enemyrows}</tbody></table> 
       const availGames = this.props.availableGames ? this.props.availableGames.initGames : []
 
     return (
       <div className="App">
         {sounds}
-
+        {result}
 
           <div className='pull-left  col-sm-12 col-md-6  col-lg-6 container'>
               {this.props.myTurn ? <span>My turn</span> : <span>Wait!!!</span>}
               Enemy  
-            {boardEnemy}
+            {/* {boardEnemy} */}
+            <Board  {...this.props}  />
           </div>
 
           <div className='pull-left  col-sm-12 col-md-6  col-lg-6 container'>My board

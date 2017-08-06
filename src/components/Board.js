@@ -29,7 +29,7 @@ export  class Board extends Component {
 
             let rows =  Array.apply(null,  Array(10)).map((i,y)=>{
             let cells =  Array.apply(null,Array(10)).map((l,x)=>{
-                var className = this.resolveClassEnemy(x, y);
+                var className = this.props.isMy ?  this.resolveClassEnemy(x, y) :this.resolveClass(x, y) ;
                     return <td className={className} onClick={this.props.myTurn && this.props.startedGame ? 
                     this.props.click.bind(null, x, y, this.props.startedGame.game) : null} key={x + '_' + y }></td>
             });
@@ -37,7 +37,6 @@ export  class Board extends Component {
         });
 
               const boardEnemy =  <table disabled={!this.props.myTurn} ><tbody>{rows}</tbody></table>
-
 
               return (<div>
                   {boardEnemy}
