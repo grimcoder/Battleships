@@ -9,7 +9,10 @@ class Main extends Component {
   render() {
     return (
       <div>
-        <Link to='/' >Home</Link>
+        <div className='container'>
+          <Link to='/'  ><h1 className='text-center'>🏠 </h1> </Link>
+        </div>
+        
         {React.cloneElement(this.props.children, this.props)}
       </div>
     )

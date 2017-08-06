@@ -16,7 +16,7 @@ class Home extends Component {
     render() {
         return ( <div>
 
-            <h1 onClick = {
+            <h1 className='text-center' onClick = {
                 () => {
                     this.props.history.push.bind(this, '/lobby')()
                     this.props.SocketIOHandshake.bind(this)();

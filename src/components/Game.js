@@ -1,5 +1,16 @@
+
 import React, { Component } from 'react';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.css';
+
+import boom from '../sounds/boom.wav'
+
+import hit from '../sounds/hit.wav'
+import killed from '../sounds/killed.wav'
+import lost from '../sounds/lost.wav'
+import tried from '../sounds/tried.wav'
+import won from '../sounds/won.wav'
+
 import {DotInArray, AllDotIn} from './../tools'
 
 class Game extends Component {
@@ -24,9 +35,10 @@ class Game extends Component {
         this.setState({showEnemy: false})
     }
 
-    resolveClass (x,y)  {
-        if (!this.props.hits || this.props.hits.length ==0) return 'empty'
-        let hit = this.props.hits.filter((hit)=>hit.x == x && hit.y == y)[0];
+    resolveClass (x,y, hits = this.props.hits)  {
+
+        if (!hits || hits.length ==0) return 'empty'
+        let hit = hits.filter((hit)=>hit.x == x && hit.y == y)[0];
         return hit ? hit.status : 'empty'
     }
 
@@ -41,11 +53,54 @@ class Game extends Component {
         return hit ? hit.status : shipStatus
     }
 
+    boomSoundplay(audio){
+        this[audio].play();
+    }
+
+
+    componentWillReceiveProps (nextProps) {
+            for(let x = 0; x < 10; x++){
+                for (let y = 0; y < 10; y++){
+
+                    let newValue =this.resolveClass(x, y, nextProps.hits); 
+                    let oldValue =this.resolveClass(x, y, this.props.hits);
+                    
+                    if (newValue != oldValue) {
+                        this.boomSoundplay(newValue);
+                    }
+
+                }
+
+                let newValue =nextProps.winner; 
+                let oldValue =this.props.winner;
+
+                if (newValue != oldValue) {
+                    let playEnd = newValue == this.props.playerId ? 'win' : 'lost';
+                    this.boomSoundplay(playEnd);
+                }
+
+            }
+
+
+    }
+
+
   render() {
-    if (this.props.winner) {
+
+
+    var sounds = 
+    <div>
+        <audio src={hit} ref={(hit)=>{this.hit = hit;}}/>
+        <audio src={killed} ref={(killed)=>{this.killed = killed;}}/>
+        <audio src={lost} ref={(lost)=>{this.lost = lost;}}/>
+        <audio src={tried} ref={(tried)=>{this.tried = tried;}}/>
+        <audio src={won} ref={(won)=>{this.won = won;}}/>
+    </div>
+
+if (this.props.winner) {
         //alert(`Winner is ${this.props.winner}`)
         const result =  this.props.playerName == this.props.winner ? "You are winner" : "You lost";
-        return (<div>{result}</div>)
+        return (<div>{sounds}{result}</div>)
     }
 
       let enemyrows =  Array.apply(null,  Array(10)).map((i,y)=>{
@@ -65,9 +120,9 @@ class Game extends Component {
           return <tr  key={y}>{cells}</tr>
       });
 
-      const board = this.state.showEnemy ?  
-      <table disabled={!this.props.myTurn} ><tbody>{rows}</tbody></table> 
-      : <table disabled={true} ><tbody>{enemyrows}</tbody></table> 
+      const boardEnemy =  <table disabled={!this.props.myTurn} ><tbody>{rows}</tbody></table>
+
+      const boardMy = <table disabled={true} ><tbody>{enemyrows}</tbody></table> 
 
       
       const availGames = this.props.availableGames ? this.props.availableGames.initGames : []
@@ -75,15 +130,20 @@ class Game extends Component {
     return (
       <div className="App">
 
-            <button className={!this.state.showEnemy ? 'bold' : null} 
-            onClick={this.showMyBoard}>My Board</button>
+{sounds}
+        {/* <button onClick={this.boomSoundplay.bind(this, 'boomSound')}>Play</button> */}
 
-            <button className={this.state.showEnemy ? 'bold' : null} 
-            onClick={this.showEnemyBoard}>Enemy {this.props.enemyName}</button>
 
-          {this.props.myTurn ? <span>My turn</span> : undefined}
-          {board}
-          <hr />
+          <div className='pull-left  col-sm-12 col-md-6  col-lg-6 container'>
+              {this.props.myTurn ? <span>My turn</span> : <span>Wait!!!</span>}
+              Enemy  
+            {boardEnemy}
+          </div>
+
+          <div className='pull-left  col-sm-12 col-md-6  col-lg-6 container'>My board
+            {boardMy}
+          </div>
+
       </div>
     );
   }
