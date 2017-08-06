@@ -1,9 +1,11 @@
 import React , {Component} from 'react';
 import { Link } from 'react-router';
+import './App.css';
+import { Board } from './Board'
 
 class StartGame extends Component {
-constructor(props){
 
+constructor(props){
     super(props)
     this.state = {}
   }
@@ -63,25 +65,73 @@ constructor(props){
 
     }
 
-
-    this.props.startGame.bind(this, this.props.joinedGame, ships.map(ship=>{return {positions: ship}}))();
-    this.props.history.push.bind(this, '/game')();
+    this.setState({
+      ships: ships, 
+      allShips: ships.reduce((all, ship)=>[...all, ...ship], [])
+    })
 
   }
 
+    StartGame(){
+      this.props.startGame.bind(this, this.props.joinedGame, this.state.ships.map(ship=>{return {positions: ship}}))();
+
+      this.props.history.push.bind(this, '/game')();
+    }
+
+    resolveClass (x,y, hits = this.props.hits)  {
+
+        if (!hits || hits.length ==0) return 'empty'
+        let hit = hits.filter((hit)=>hit.x == x && hit.y == y)[0];
+        return hit ? hit.status : 'empty'
+    }
+
+    resolveClassEnemy (x,y)  {
+
+        let ship = this.state.allShips ? this.state.allShips.filter((hit)=>hit[0] == x && hit[1] == y)[0] : undefined;
+        let shipStatus = ship ? 'ship' : 'empty';
+
+        let hit = this.props.enemyHits ? this.props.enemyHits.filter((hit)=>hit.x == x && hit.y == y)[0] : undefined;
+
+        return hit ? hit.status : shipStatus
+    }
+
 
   render() {
-      const startButton = this.props.joinedGame
-          ?  <button onClick={()=>{
+
+          let rows =  Array.apply(null,  Array(10)).map((i,y)=>{
+          let cells =  Array.apply(null,Array(10)).map((l,x)=>{
+              var className = this.resolveClassEnemy(x, y);
+                 return <td className={className} onClick={this.props.myTurn && this.props.startedGame ? 
+                 this.props.click.bind(null, x, y, this.props.startedGame.game) : null} key={x + '_' + y }></td>
+          });
+          return <tr  key={y}>{cells}</tr>
+      });
+
+      const boardEnemy =  <table disabled={!this.props.myTurn} ><tbody>{rows}</tbody></table>
+
+      const generateButton =  <button onClick={()=>{
 
               this.GenerateBoard();
 
-            }}>Start game</button>
-          : undefined;
+            }}>Generate Board</button>
+          //: undefined;
+
+      const startButton =  <button onClick={()=>{
+
+              this.StartGame();
+
+            }}>Start Game</button>
+          //: undefined;
 
     return (
       <div>
-        {startButton}
+        {generateButton}
+        {this.state.ships ? startButton : null}
+        
+      {/* {boardEnemy} */}
+
+         <Board  isMy='true' {...this.props} ships={this.state.ships} allShips={this.state.allShips} /> 
+
       </div>
     )
   }
