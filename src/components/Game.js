@@ -94,10 +94,9 @@ if (this.props.winner) {
         {result}
 
           <div className='pull-left  col-sm-12 col-md-6  col-lg-6 container'>
-              {this.props.myTurn ? <span>My turn</span> : <span>Wait!!!</span>}
-              Enemy  
-            {/* {boardEnemy} */}
-            <Board  {...this.props}  />
+              {result ? this.props.myTurn ? <span>My turn</span> : <span>Wait!!!</span> : result}
+
+            <Board {...this.props}  />
           </div>
 
           <div className='pull-left  col-sm-12 col-md-6  col-lg-6 container'>My board

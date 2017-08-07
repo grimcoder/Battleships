@@ -23,6 +23,7 @@ constructor(props){
   GenerateBoard(){
 
     let rules = [5,4,3,3,2]
+    // let rules = [2]
     let ships = [];
 
     for (let i = 0; i < rules.length; i++){
@@ -87,9 +88,11 @@ constructor(props){
             }}>Start Game</button>
 
     return (
-      <div>
+      <div className='text-center'>
         {generateButton}
         {this.state.ships ? startButton : null}
+        <br />
+        <div height='15px' /> 
          <Board  isMy='true' {...this.props} ships={this.state.ships} allShips={this.state.allShips} /> 
       </div>
     )
