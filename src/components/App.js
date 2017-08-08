@@ -13,7 +13,7 @@ function mapStateToProps(state) {
         joinedGame: state.joinedGame,
         startingGame: state.startingGame,
         startedGame: state.startedGame,
-        gameStatue: state.gameStatue,
+        gameStatus: state.gameStatus,
         myTurn: state.myTurn,
         hits: state.hits,
         winner: state.winner,
@@ -23,7 +23,8 @@ function mapStateToProps(state) {
         enemyHits: state.enemyHits,
         ships: state.ships,
         allShips: state.allShips,
-        playerId: state.playerId
+        playerId: state.playerId,
+        error: state.error
     }
 }
 

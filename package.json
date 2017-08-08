@@ -18,12 +18,13 @@
     "redux": "^3.5.2",
     "redux-socket.io": "^1.4.0",
     "rimraf": "^2.5.2",
-    "simple-node-logger": "^0.93.28",
+    "simple-node-logger": "^0.93.28" ,
     "socket.io": "^2.0.3",
     "socket.io-client": "^2.0.3",
     "uuid": "^3.1.0"
   },
   "scripts": {
+    "doAll": "npm run build && npm run deploy && npm run deployService && npm run restartService",
     "start": "REACT_APP_API_HOST=http://localhost:3000 react-scripts  start",
     "build": "REACT_APP_API_HOST=http://api.taraskovtun.com:80 react-scripts build",
     "deploy": "scp -r build/* root@DigiGh:/var/www/demo/",

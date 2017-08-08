@@ -1,5 +1,5 @@
 import React , {Component} from 'react';
-import { Link } from 'react-router';
+import { Link , Redirect} from 'react-router';
 import './App.css';
 import { Board } from './Board'
 
@@ -71,19 +71,28 @@ constructor(props){
     })
   }
 
+  componentDidUpdate(){
+            if (this.props.gameStatus == 'started')
+                {
+                  this.props.history.push.bind(this, '/game')();
+                }
+  }
+
     StartGame(){
       this.props.startGame.bind(this, this.props.joinedGame, this.state.ships.map(ship=>{return {positions: ship}}))();
-      this.props.history.push.bind(this, '/game')();
+      
+      this.setState({'waiting': true})
+    
     }
 
 
   render() {
 
-      const generateButton =  <button onClick={()=>{
+      const generateButton =  <button  className='btn btn-primary  btn-lg ' onClick={()=>{
               this.GenerateBoard();
             }}>Generate Board</button>
 
-      const startButton =  <button onClick={()=>{
+      const startButton =  <button  className='btn btn-primary  btn-lg ' onClick={()=>{
               this.StartGame();
             }}>Start Game</button>
 
@@ -93,6 +102,8 @@ constructor(props){
         {this.state.ships ? startButton : null}
         <br />
         <div height='15px' /> 
+        {this.state.waiting ? <h1>Waiting</h1> : null}
+
          <Board  isMy='true' {...this.props} ships={this.state.ships} allShips={this.state.allShips} /> 
       </div>
     )

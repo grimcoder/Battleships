@@ -9,13 +9,14 @@ function ships(state = [], action) {
 
             state = clone(state)
             state.userId = action.userId;
+            state['playerId'] = action.userId;
             return state;
 
         case 'CELL_CLICKED' :
 
             const x = action.x;
             const y = action.y;
-            // console.log(`cell clicked!! ${x} ${y}`);
+
             state = clone(state)
             var hits = state.data.hits;
             if (!DotInArray([x,y], hits)) {
@@ -24,14 +25,16 @@ function ships(state = [], action) {
             return {data : {ships: state.data.ships, hits}};
 
 
+        case 'disconnected' :
+            state = {'error': true,
+                'notification': 'Someone was disconnected. Please start again.'}
+            return state;
+
         case 'initResponse':
             console.log (action);
             state = clone(state);
-
             state['availableGames'] = action.data;
-
-            //state['gameStatue'] = 'init';
-
+            state['playerId'] = action.userId;
             return state;
 
         case 'createResponse':
@@ -39,7 +42,8 @@ function ships(state = [], action) {
             state = clone(state);
             state.playerId = action.data.userId;
             state.playerName = action.data.playerName;
-            state['gameStatue'] = 'created';
+            state['availableGames'] = action.data;
+            state['gameStatus'] = 'created';
             return state;
 
         case 'joinResponse':
@@ -48,7 +52,7 @@ function ships(state = [], action) {
 
             state.playerId = state.playerId ? state.playerId : action.data.userId;
 
-            state['gameStatue'] = 'joined';
+            state['gameStatus'] = 'joined';
             state.availableGames = undefined;
             state.joinedGame = action.data.gameId;
             state.createdById = action.data.createdById;

@@ -71,6 +71,13 @@ class Game extends Component {
 
 
   render() {
+
+    if (this.props.error){
+
+        return <h1>Error happened. Please click home.</h1>
+    }
+
+
       let result
     var sounds = 
     <div>
@@ -94,7 +101,7 @@ if (this.props.winner) {
         {result}
 
           <div className='pull-left  col-sm-12 col-md-6  col-lg-6 container'>
-              {result ? this.props.myTurn ? <span>My turn</span> : <span>Wait!!!</span> : result}
+              {!this.props.winner ? this.props.myTurn ? <span>My turn</span> : <span>Wait!!!</span> : result}
 
             <Board {...this.props}  />
           </div>
@@ -110,3 +117,5 @@ if (this.props.winner) {
 }
 
 export default Game;
+
+

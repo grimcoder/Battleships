@@ -10,9 +10,12 @@ module.exports.reducer =  (state = {}, action) => {
     let gameId;
     switch (action.type){
 
+        case 'disconnect': 
+            return {games: {}}
         case 'server/init' :
 
             return makeCopy(state);
+
 
         case 'server/create':
 

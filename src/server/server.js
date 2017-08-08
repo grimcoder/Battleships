@@ -20,9 +20,21 @@ io.on('connection', function(socket) {
 
     console.log("Socket connected: " + socket.id);
 
-    socket.on('disconnected', function() {
+    socket.on('disconnect', function() {
 
-        socket.emit('DelPlayer', person_name);
+        // notify all users this game is cancelled because user dropped off
+        let gamesWithPlayer = state.games ? Object.entries(state.games).filter(game=>Object.keys(game[1].players).some(playerId=>playerId==socket.id))[0]
+            : undefined;
+
+            if (gamesWithPlayer){
+                //io.sockets.emit('action', { type: 'disconnected', userId: socket.id });
+                state.games[gamesWithPlayer[0]] = {}
+                
+            }
+
+
+        // delete games with this user: 
+
 
     });
 
@@ -31,12 +43,12 @@ io.on('connection', function(socket) {
         const socketId = socket.id;
         action.socketId = socketId;
         log.info(action);
-
+        let initGames;
         switch (action.type) {
 
             case 'server/init':
                 state = reducer(state, action);
-                const initGames = Object.entries(state.games).filter((game) => game[1].status = 'init').map((item) => [item[0], item[1]]);
+                initGames = Object.entries(state.games).filter((game) => game[1].status = 'init').map((item) => [item[0], item[1]]);
                 socket.emit('action', { type: 'initResponse', data: { userId: socket.id, initGames: initGames } });
 
                 break;
@@ -55,13 +67,16 @@ io.on('connection', function(socket) {
                     io.sockets.in(action.newgameId).emit(action.newgameId, 'a new user has joined the room'); // broadcast to everyone in the room
                 });
 
-                socket.emit('action', {
+                 initGames = Object.entries(state.games).filter((game) => game[1].status = 'init').map((item) => [item[0], item[1]]);
+                
+                 io.sockets.emit('action', {
                     type: 'createResponse',
                     data: {
                         userId: socketId,
                         newgame: state.games[action.newgameId],
                         playerName: state.games[action.newgameId].players[socketId].name,
-                        newgameId: action.newgameId
+                        newgameId: action.newgameId,
+                        initGames: initGames
                     }
                 });
 
@@ -95,9 +110,11 @@ io.on('connection', function(socket) {
                     io.sockets.in(action.data.game).emit('action', { type: 'startedResponse', data: { gameId: action.data } });
 
                 }
-                io.sockets.in(action.data.game).emit('action', { type: 'yourTurn', data: state.games[action.data.game].turn });
-
+                //if (io.sockets.in(action.data.game).length > 1){
+                    io.sockets.in(action.data.game).emit('action', { type: 'yourTurn', data: state.games[action.data.game].turn });
+                //}
                 break;
+
 
             case 'server/CELL_CLICKED':
                 state = reducer(state, action);

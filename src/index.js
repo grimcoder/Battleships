@@ -20,7 +20,7 @@ const provider = (
 
       <Router >
         <Route path="/" component={App} >
-           <IndexRoute component={Home}></IndexRoute>  
+           <IndexRoute component={Lobby}></IndexRoute>  
            <Route path="/game" component={Game}></Route>    
            <Route path="/lobby" component={Lobby}></Route>    
            <Route path="/creategame" component={CreateGame}></Route>    

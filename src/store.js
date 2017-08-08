@@ -12,7 +12,7 @@ import { browserHistory } from 'react-router';
 import rootReducer from './reducers/index';
 
 
-let socket = io(process.env.REACT_APP_API_HOST)
+let socket = io(process.env.REACT_APP_API_HOST, {'forceNew': true})
 let socketIoMiddleware = createSocketIoMiddleware(socket, "server/");
 
 // create an object for the default data

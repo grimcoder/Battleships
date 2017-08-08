@@ -9,9 +9,7 @@ class Home extends Component {
 
     }
 
-    componentDidMount() {
-        this.props.resetState();
-    }
+
 
     render() {
         return ( <div>
