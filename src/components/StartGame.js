@@ -50,7 +50,7 @@ constructor(props){
 
         }
 
-        if (newShip.some(cell=>allShips.some(acell=>cell[0] == acell[0] && cell[1] == acell[1])))
+        if (newShip.some(cell=>allShips.some(acell=>Math.abs(cell[0] - acell[0]) < 2 && Math.abs(cell[1] - acell[1]) < 2)))
         {
             continue;
         }
