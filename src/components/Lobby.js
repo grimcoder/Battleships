@@ -1,5 +1,7 @@
 import React , {Component} from 'react';
 import { Link } from 'react-router';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'; 
+import './App.css';
 
 class Lobby extends Component {
 
@@ -58,9 +60,19 @@ class Lobby extends Component {
     return (
       <div className='container'>
 
-        {createGameButton}
-        {joinButtons}
+         {createGameButton}  
+
       
+      <ReactCSSTransitionGroup
+          transitionName="example"
+          transitionAppear={true}
+          transitionAppearTimeout={1500}
+          transitionEnter={false}
+          transitionLeave={false}>
+
+            {joinButtons}  
+    
+        </ReactCSSTransitionGroup>      
       </div>
     )
   }

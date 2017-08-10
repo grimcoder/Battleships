@@ -2,6 +2,8 @@ import React , {Component} from 'react';
 import { Link , Redirect} from 'react-router';
 import './App.css';
 import { Board } from './Board'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'; 
+
 
 class StartGame extends Component {
 
@@ -97,6 +99,13 @@ constructor(props){
             }}>Start Game</button>
 
     return (
+            <ReactCSSTransitionGroup
+          transitionName="example"
+          transitionAppear={true}
+          transitionAppearTimeout={1500}
+          transitionEnter={false}
+          transitionLeave={false}>
+
       <div className='text-center'>
         {generateButton}
         {this.state.ships ? startButton : null}
@@ -106,6 +115,7 @@ constructor(props){
 
          <Board  isMy='true' {...this.props} ships={this.state.ships} allShips={this.state.allShips} /> 
       </div>
+        </ReactCSSTransitionGroup>
     )
   }
 };

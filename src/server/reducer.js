@@ -111,13 +111,13 @@ module.exports.reducer =  (state = {}, action) => {
 
         didIWin = (board) =>{
         }
-
+        
         resolveClass = (x,y, board) => {
 
             const hits = board.enemyHits;
             const allShips = board.allShips;
             const ships = board.ships;
-
+                
             if (DotInArray([x,y],hits) && DotInArray([x,y],allShips)) {
 
                 for (var s = 0 ; s < ships.layout.length; s++){
