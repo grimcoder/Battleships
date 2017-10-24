@@ -2,6 +2,7 @@
 
 This demo game is created to show how to use React Redux with WebSocket Middleware in real-time.
 
+PLays two! 
 Live demo is here: 
 
 http://demo.taraskovtun.com
